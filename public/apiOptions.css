@@ -1,0 +1,12 @@
+/*  GOOGLE FONTS 
+font-family: 'Monoton', cursive; -> for title
+font-family: 'Roboto Mono', monospace; -> for normal text
+*/
+
+
+.json-displayer{
+    background-color: aliceblue;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-top: 2rem;
+}
