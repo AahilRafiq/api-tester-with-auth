@@ -7,7 +7,7 @@
       <button class="nav-link" id="auth-tab" data-bs-toggle="tab" data-bs-target="#auth" type="button" role="tab" aria-controls="auth" aria-selected="false">Auth</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="body-tab" data-bs-toggle="tab" data-bs-target="#body" type="button" role="tab" aria-controls="body" aria-selected="false">Body</button>
+      <button class="nav-link" id="headers-tab" data-bs-toggle="tab" data-bs-target="#headers" type="button" role="tab" aria-controls="body" aria-selected="false">Headers</button>
     </li>
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="reqBody-tab" data-bs-toggle="tab" data-bs-target="#reqBody" type="button" role="tab" aria-controls="body" aria-selected="false">Axios Req Body</button>
@@ -15,25 +15,43 @@
   </ul>
   <div class="tab-content" id="myTabContent">
     
-    <div class="tab-pane fade show active" id="params" role="tabpanel" aria-labelledby="params-tab">
+
+
+<!-- 1.Params section -->
+    <div class="tab-pane show active" id="params" role="tabpanel" aria-labelledby="params-tab">
         
-        Params
+        <form action="" class="container" method="post">
+            <div>
+                <input type="checkbox" name="isChecked" >
+                <input type="text" placeholder="Key" class="styl-input">
+                <input type="text" placeholder="Value" class="styl-input">
+            </div>
+        </form>
     
     </div>
         
-    <div class="tab-pane fade" id="auth" role="tabpanel" aria-labelledby="auth-tab">
+
+
+<!-- 2.Auth section -->
+    <div class="tab-pane" id="auth" role="tabpanel" aria-labelledby="auth-tab">
         
         Auth
     
     </div>
     
-    <div class="tab-pane fade" id="body" role="tabpanel" aria-labelledby="body-tab">
+
+
+<!-- 3.Headers section -->
+    <div class="tab-pane" id="headers" role="tabpanel" aria-labelledby="headers-tab">
         
-        Body
+        header
     
     </div>
 
-    <div class="tab-pane fade" id="reqBody" role="tabpanel" aria-labelledby="reqBody-tab">
+
+
+<!-- Req Bodysection  -->
+    <div class="tab-pane" id="reqBody" role="tabpanel" aria-labelledby="reqBody-tab">
         
         Axios
     

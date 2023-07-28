@@ -18,14 +18,12 @@ body{
     display: flex;
     flex-wrap: wrap;
 }
-
 .api-req-type{
     color: #03C988;
     width: 6rem;
     display: inline;
     border-radius: 0.5rem;
 }
-
 .api-endpoint{
     flex-grow: 1;
     border-color: white;
