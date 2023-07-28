@@ -23,17 +23,20 @@
     <p>Simple Api testing tool , a simpler clone of Postman</p>
 
     <!-- Endpoint input field -->
-    <form class="api-input-container" method="post" action="/endpoint">
-        <select class="form-select api-req-type" name="apireq_type">
-            <option value="1">GET</option>
-            <option value="2">POST</option>
-        </select>
-        <input type="text" name="apireq_endpoint" class="api-endpoint" placeholder="Enter api endpoint">
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <form  method="post" action="/endpoint">
+        <div class="api-input-container">
+            <select class="form-select api-req-type" name="apireq_type">
+                <option value="1">GET</option>
+                <option value="2">POST</option>
+            </select>
+            <input type="text" name="apireq_endpoint" class="api-endpoint" placeholder="Enter api endpoint">
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </div>
+        <%- include('apiOptions.ejs')  %>
     </form>
         
 <!-- 2. Api params , body , auth section here -->
-<%- include('apiOptions.ejs')  %>
 
 
 

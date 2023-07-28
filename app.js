@@ -10,6 +10,10 @@ app.get('/',(req,res)=>{
     res.render('main.ejs')
 })
 
+app.post('/endpoint',express.urlencoded({extended:true}),(req,res)=>{
+    console.log(req.body);
+})  
+
 /* SERVER */ 
 app.listen(port,()=>{
     console.log("Server started !");

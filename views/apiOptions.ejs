@@ -20,14 +20,17 @@
 <!-- 1.Params section -->
     <div class="tab-pane show active" id="params" role="tabpanel" aria-labelledby="params-tab">
         
-        <form action="" class="container" method="post">
-            <div>
-                <input type="checkbox" name="isChecked" >
-                <input type="text" placeholder="Key" class="styl-input">
-                <input type="text" placeholder="Value" class="styl-input">
-            </div>
-        </form>
-    
+      <!-- The first param -->
+      <div class=" container m-2" id="firstParam">
+        <input type="text" placeholder="Key" class="styl-input" name="paramKey">
+        <input type="text" placeholder="Value" class="styl-input" name="paramValue">
+      </div>
+
+      <!-- Extra-new params container -->
+      <div id="newParamsContainer"></div>
+
+      <!-- Button to add new param -->
+      <a class="btn btn-outline-success m-3" id="addParamBtn">Add</a>
     </div>
         
 
