@@ -39,8 +39,26 @@
 <!-- 2.Auth section -->
     <div class="tab-pane" id="auth" role="tabpanel" aria-labelledby="auth-tab">
         
-        Auth
-    
+      <!-- Select type of Auth -->
+      <select class="form-select" id="authTypeSelector" name = "authType">
+        <option selected value="none">None</option>
+        <option value="basic">Basic</option>
+        <option value="apikey">Api Key</option>
+        <option value="bearer">Bearer Token</option>
+      </select>
+      <br>
+      <!-- Input field for auth -->
+      <input type="text" name="authInput1" id="authInput1" class="form-control" >
+      <br>
+      <input type="text" name="auhtInput2" id="authInput2" class="form-control">
+
+      <!-- Api key selected means , display this -->
+      <br><select class="form-select" name="apikeyAuthtype" id="apikeyAuthType">
+        <option selected value="addToHeader">Add to Header</option>
+        <option value="addToQueryParams">Add to Query Params</option>
+      </select>
+
+
     </div>
     
 

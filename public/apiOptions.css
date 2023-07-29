@@ -25,6 +25,14 @@ font-family: 'Roboto Mono', monospace; -> for normal text
     padding: 2rem;
 }
 
+/* This for hiding the auth section for 1st load */
+#authInput1,#authInput2,#apikeyAuthType{
+    visibility: hidden;
+}
+#apikeyAuthType{
+    color: green;
+}
+
 /* General input field styling */
 .styl-input{
     padding: 6px 12px;
@@ -47,3 +55,4 @@ font-family: 'Roboto Mono', monospace; -> for normal text
     }
     
 }
+
