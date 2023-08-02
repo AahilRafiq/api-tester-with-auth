@@ -1,10 +1,11 @@
 /* node modules setup */ 
-import express, { response } from 'express'
+import express, { json, response } from 'express'
 import axios from 'axios'
 
 const app = express()
 const port = 3000
 app.use(express.static('public'))
+app.set('view engine', 'ejs');
 
 // Home page render
 app.get('/',(req,res)=>{
@@ -40,20 +41,62 @@ app.post('/endpoint',express.urlencoded({extended:true}),(req,res)=>{
             parameters[paramKeys[i]] = paramValues[i]
         }
         axiosConfig.params = parameters
-        console.log(axiosConfig);
-
     }else{
         axiosConfig.params = {} //We need to define it as an object inorder push key-value pairs into it
         axiosConfig.params[paramKeys] = paramValues
     }
     // Add authentication if required
-    if(apiKeyAuthType=='addToQueryParams'){
+    if(authType=='apikey' && apiKeyAuthType=='addToQueryParams'){
         axiosConfig.params[authInput1] = authInput2
     }
+
+    //3.Headers
+    let headers = {}; //Create an object first to contain all parameters
+    if(Array.isArray(headerKeys)){
+        for(let i=0;i<headerKeys.length;i++){
+            headers[headerKeys[i]] = headerValues[i]
+        }
+    }else{
+        if(headerKeys.length!=0){
+            headers[headerKeys] = headerValues
+        } 
+    }
+    if(authType=='apikey' && apiKeyAuthType=='addToHeader'){
+        if(authInput1.length!=0){
+            headers[authInput1] = authInput2
+        }
+    }
+    //Now add other authentications here
+    else if(authType=="basic"){
+        const encodedCredentials = btoa(`${authInput1}:${authInput2}`);
+        headers.Authorization = `Basic ${encodedCredentials}`
+    }else if(authType=="bearer"){
+        headers.Authorization = `Bearer ${authInput1}`
+    }
+    // if headers is empty , just dont add it
+    if(Object.entries(headers).length === 0){
+        console.log("No headers");
+    } 
+    else axiosConfig.headers = headers
+
+    //4.Axios reqbody
+    if(axiosReqBody.length!=0){
+        axiosConfig = JSON.parse(axiosReqBody)
+    }
     console.log(axiosConfig);
+
+    // Finally use axios to make request
+    axios(axiosConfig)
+    .then(response => {
+        res.render('main.ejs', { apiResponse : JSON.stringify(response.data,null,2) })
+    }).catch(err => {
+        res.render('main.ejs', { apiResponse : JSON.stringify(err.message,null,2) })
+    })
 })  
 
 /* SERVER */ 
 app.listen(port,()=>{
     console.log("Server started !");
 })
+
+
