@@ -25,6 +25,7 @@ app.post('/endpoint',express.urlencoded({extended:true}),(req,res)=>{
     const apiKeyAuthType = req.body.apikeyAuthtype
     const headerKeys = req.body.headerKey
     const headerValues = req.body.headerValue
+    const reqBody = req.body.reqbody
     const axiosReqBody = req.body.axiosReqBody
 
     // 1.Setup the config file
@@ -35,20 +36,24 @@ app.post('/endpoint',express.urlencoded({extended:true}),(req,res)=>{
     }
 
     // 2.Setup Parameters
+    let parameters = {}; //Create an object first to contain all parameters
     if(Array.isArray(paramKeys)){
-        let parameters = {}; //Create an object first to contain all parameters
         for(let i=0;i<paramKeys.length;i++){
             parameters[paramKeys[i]] = paramValues[i]
         }
-        axiosConfig.params = parameters
-    }else{
-        axiosConfig.params = {} //We need to define it as an object inorder push key-value pairs into it
-        axiosConfig.params[paramKeys] = paramValues
+    }else if(paramKeys.length!=0){
+        parameters[paramKeys] = paramValues
     }
     // Add authentication if required
     if(authType=='apikey' && apiKeyAuthType=='addToQueryParams'){
-        axiosConfig.params[authInput1] = authInput2
+        parameters[authInput1] = authInput2
     }
+    // if headers is empty , just dont add it
+    if(Object.entries(paramValues).length === 0){
+        console.log("No parameters");
+    } 
+    else axiosConfig.params = parameters
+
 
     //3.Headers
     let headers = {}; //Create an object first to contain all parameters
@@ -79,7 +84,12 @@ app.post('/endpoint',express.urlencoded({extended:true}),(req,res)=>{
     } 
     else axiosConfig.headers = headers
 
-    //4.Axios reqbody
+    // 4. Request body
+    if(reqBody.length!=0){
+        axiosConfig.data = JSON.parse(reqBody)
+    }
+
+    //5.Axios custom reqbody
     if(axiosReqBody.length!=0){
         axiosConfig = JSON.parse(axiosReqBody)
     }
@@ -90,13 +100,13 @@ app.post('/endpoint',express.urlencoded({extended:true}),(req,res)=>{
     .then(response => {
         res.render('main.ejs', { apiResponse : JSON.stringify(response.data,null,2) })
     }).catch(err => {
-        res.render('main.ejs', { apiResponse : JSON.stringify(err.message,null,2) })
+        res.render('main.ejs', { apiResponse : JSON.stringify(err,null,2) })
     })
 })  
 
 /* SERVER */ 
 app.listen(port,()=>{
-    console.log("Server started !");
+    console.log("Server started on port 3000!");
 })
 
 

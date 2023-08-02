@@ -10,7 +10,10 @@
       <button class="nav-link" id="headers-tab" data-bs-toggle="tab" data-bs-target="#headers" type="button" role="tab" aria-controls="body" aria-selected="false">Headers</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="reqBody-tab" data-bs-toggle="tab" data-bs-target="#reqBody" type="button" role="tab" aria-controls="body" aria-selected="false">Axios Req Body</button>
+      <button class="nav-link" id="reqbody-tab" data-bs-toggle="tab" data-bs-target="#reqbody" type="button" role="tab" aria-controls="reqbody" aria-selected="false">Request Body</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="axiosreqBody-tab" data-bs-toggle="tab" data-bs-target="#axiosreqBody" type="button" role="tab" aria-controls="body" aria-selected="false">Custom Axios ReqBody</button>
     </li>
   </ul>
   <div class="tab-content" id="myTabContent">
@@ -81,11 +84,16 @@
     
     </div>
 
+<!-- 4.Request Body section -->
+    <div class="tab-pane" id="reqbody" role="tabpanel" aria-labelledby="reqbody-tab">
+      <textarea  class="styl-input" id="" cols="50" rows="10" name="reqbody" placeholder="Enter Request body"></textarea>
+    </div>
+
 
 
 <!-- Req Bodysection  -->
-    <div class="tab-pane" id="reqBody" role="tabpanel" aria-labelledby="reqBody-tab">
-      <textarea  class="styl-input" id="" cols="50" rows="10" name="axiosReqBody" placeholder="Enter Req body"></textarea>
+    <div class="tab-pane" id="axiosreqBody" role="tabpanel" aria-labelledby="reqBody-tab">
+      <textarea  class="styl-input" id="" cols="50" rows="10" name="axiosReqBody" placeholder="Enter custom axios Req body in JSON format"></textarea>
     </div>
   
 </div>
