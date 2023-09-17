@@ -1,0 +1,11 @@
+.login-form{
+    margin: 0 auto;
+}
+
+.login-title{
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    color: #4A55A2;
+    text-align: center;
+    padding: 3rem 0;
+}

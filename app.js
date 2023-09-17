@@ -1,19 +1,28 @@
 /* node modules setup */ 
-import express, { json, response } from 'express'
+import express from 'express'
 import axios from 'axios'
+import 'dotenv/config'
 
 const app = express()
-const port = 3000
+const port = 3000 || process.env.PORT
 app.use(express.static('public'))
 app.set('view engine', 'ejs');
+app.use(express.urlencoded({extended:true}))
 
 // Home page render
 app.get('/',(req,res)=>{
     res.render('main.ejs' , { apiResponse : "Make a request" })
 })
 
-app.post('/endpoint',express.urlencoded({extended:true}),(req,res)=>{
+app.get('/login',(req,res)=>{
+    res.render('login.ejs')
+})
 
+app.get('/register',(req,res)=>{
+    res.render('register.ejs')
+})
+
+app.post('/endpoint',(req,res)=>{
     // Organizing the data from the formData
     const endpoint = req.body.apireq_endpoint
     const reqType = req.body.apireq_type

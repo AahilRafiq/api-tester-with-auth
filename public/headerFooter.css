@@ -11,6 +11,13 @@ body{
     font-family: 'Roboto', sans-serif;
     font-weight: bolder;
     color: #4A55A2;
+    display: inline;
+}
+
+.title-section{
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: space-between;
 }
 
 /* 1. Api endpoint enterer */
