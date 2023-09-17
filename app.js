@@ -2,15 +2,20 @@
 import express from 'express'
 import axios from 'axios'
 import 'dotenv/config'
+import cookieParser from 'cookie-parser'
+import Jwt from 'jsonwebtoken'
+import md5 from 'md5'
+import { usersDB } from './db.js'
 
 const app = express()
 const port = 3000 || process.env.PORT
 app.use(express.static('public'))
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}))
+app.use(cookieParser())
 
 // Home page render
-app.get('/',(req,res)=>{
+app.get('/',authVerify,(req,res)=>{
     res.render('main.ejs' , { apiResponse : "Make a request" })
 })
 
@@ -18,13 +23,57 @@ app.get('/',(req,res)=>{
 app.get('/login',(req,res)=>{
     res.render('login.ejs')
 })
+app.post('/login',async (req,res)=>{
+
+    //check if its there in database
+    const user = await usersDB.findUser(req.body.username)
+    if(user===null || user.password!=md5(req.body.password)){
+        res.redirect('/login')
+    }
+    else{
+        //now if found ,generate token
+        const payload = {
+            username:user.username,
+            password:user.password
+        }
+        const cookieToken = Jwt.sign(payload,process.env.JWT_SECRET_KEY,{expiresIn: '10d'})
+        res.cookie('jwtToken',cookieToken)
+        res.redirect('/')
+    }
+})
 
 // Render new register page
 app.get('/register',(req,res)=>{
     res.render('register.ejs')
 })
+app.post('/register',async (req,res)=>{
+    try{
+        const newUser = await usersDB.addUser(req.body.username,req.body.password)
+        if(newUser===null){
+            res.redirect('/login')
+        }
+        else{
+            const payload = {
+                username:newUser.username,
+                password:newUser.password
+            }
+            const cookieToken = Jwt.sign(payload,process.env.JWT_SECRET_KEY,{expiresIn: '10d'})
+            res.cookie('jwtToken',cookieToken)
+            res.redirect('/')
+        }
+    }
+    catch(err){
+        console.log(err.message);
+    }
+})
 
-app.post('/endpoint',(req,res)=>{
+//logout 
+app.get('/logout',(req,res)=>{
+    res.clearCookie('jwtToken')
+    res.redirect('/')
+})
+
+app.post('/endpoint',authVerify,(req,res)=>{
     // Organizing the data from the formData
     const endpoint = req.body.apireq_endpoint
     const reqType = req.body.apireq_type
@@ -120,4 +169,18 @@ app.listen(port,()=>{
     console.log("Server started on port 3000!");
 })
 
+
+// Authentication functions
+
+async function authVerify(req,res,next){
+    try{
+        const userToken = req.cookies.jwtToken
+        await Jwt.verify(userToken,process.env.JWT_SECRET_KEY)
+        next()
+    }
+    catch(err){
+        res.redirect('/login')
+        return
+    }
+}
 

@@ -25,14 +25,14 @@ const usersDB = {
     addUser : async function(username,password){
         const newUser = new User({ username: username, password: md5(password) });
         if(await User.findOne({username:username})){
-            console.log("User exists");
+            return null;
         }
         else{
             await newUser.save()
-            console.log("User added");
+            return newUser;
         }
     },
-    findUser : async function(username,password){
+    findUser : async function(username){
         const user = await User.findOne({username : username})
         return user;
     }
