@@ -14,10 +14,12 @@ app.get('/',(req,res)=>{
     res.render('main.ejs' , { apiResponse : "Make a request" })
 })
 
+// Render Login page
 app.get('/login',(req,res)=>{
     res.render('login.ejs')
 })
 
+// Render new register page
 app.get('/register',(req,res)=>{
     res.render('register.ejs')
 })
